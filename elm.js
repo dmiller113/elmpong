@@ -3137,6 +3137,73 @@ Elm.Main.make = function (_elm) {
       1) ? $Text.fromString("Up") : _U.eq(input.paddle1,
       -1) ? $Text.fromString("Down") : $Text.fromString(defaultMessage);
    };
+   var near = F3(function (n,c,m) {
+      return _U.cmp(n,
+      m - c) > -1 && _U.cmp(n,
+      m + c) < 1;
+   });
+   var within = F2(function (ball,
+   paddle) {
+      return A3(near,
+      ball.x,
+      8,
+      paddle.x) && A3(near,
+      ball.y,
+      20,
+      paddle.y);
+   });
+   var player = function (x) {
+      return {_: {}
+             ,score: 0
+             ,vx: 0
+             ,vy: 0
+             ,x: x
+             ,y: 0};
+   };
+   var Game = F4(function (a,
+   b,
+   c,
+   d) {
+      return {_: {}
+             ,ball: b
+             ,player1: c
+             ,player2: d
+             ,state: a};
+   });
+   var Play = {ctor: "Play"};
+   var Pause = {ctor: "Pause"};
+   var Object = F5(function (a,
+   b,
+   c,
+   d,
+   e) {
+      return _U.insert("vy",
+      d,
+      _U.insert("vx",
+      c,
+      _U.insert("y",
+      b,
+      _U.insert("x",a,e))));
+   });
+   var $ = {ctor: "_Tuple2"
+           ,_0: 300
+           ,_1: 200},
+   halfWidth = $._0,
+   halfHeight = $._1;
+   var defaultGame = {_: {}
+                     ,ball: {_: {}
+                            ,vx: 200
+                            ,vy: 200
+                            ,x: 0
+                            ,y: 0}
+                     ,player1: player(20 - halfWidth)
+                     ,player2: player(halfWidth - 20)
+                     ,state: Pause};
+   var $ = {ctor: "_Tuple2"
+           ,_0: 600
+           ,_1: 400},
+   gameWidth = $._0,
+   gameHeight = $._1;
    var delta = A2($Signal.map,
    $Time.inSeconds,
    $Time.fps(35));
@@ -3171,6 +3238,18 @@ Elm.Main.make = function (_elm) {
                       ,Input: Input
                       ,delta: delta
                       ,input: input
+                      ,gameHeight: gameHeight
+                      ,gameWidth: gameWidth
+                      ,halfHeight: halfHeight
+                      ,halfWidth: halfWidth
+                      ,Object: Object
+                      ,Pause: Pause
+                      ,Play: Play
+                      ,Game: Game
+                      ,player: player
+                      ,defaultGame: defaultGame
+                      ,near: near
+                      ,within: within
                       ,defaultMessage: defaultMessage
                       ,inputToMessage: inputToMessage
                       ,main: main};
