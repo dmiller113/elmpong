@@ -83,7 +83,7 @@ within ball paddle =
 
 -- Things for temp display
 defaultMessage: String
-defaultMessage = "Hello World"
+defaultMessage = "neutral"
 
 inputToMessage: Input -> Text
 inputToMessage input =
