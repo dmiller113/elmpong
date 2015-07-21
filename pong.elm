@@ -80,6 +80,23 @@ within ball paddle =
     near ball.y 20 paddle.y
 
 -- stepV: change velocity based on where it collided
+stepV: Float -> Bool -> Bool -> Float
+stepV v lowerCollision upperCollision =
+  if | lowerCollision -> abs v
+     | upperCollision -> 0 - abs v
+     | otherwise -> v
+
+-- stepObj: common code to update objects
+stepObj: Time -> Object a -> Object a
+stepObj t ({x, y, vx, vy} as obj) =
+  { obj |
+     x <- x + vx * t,
+     y <- y + vy * t
+  }
+
+stepBall: Time -> Ball -> Player -> Player -> Ball
+stepBall t ({x, y, vx, vy} as ball) player1 player2 =
+
 
 -- Things for temp display
 defaultMessage: String
